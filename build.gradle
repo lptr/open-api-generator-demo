@@ -1,0 +1,12 @@
+plugins {
+    id 'java-library'
+    id 'application'
+}
+
+dependencies {
+    compile project(path: ":open-api", configuration: "runtimeElements")
+}
+
+application {
+    mainClassName = "org.example.vava.App"
+}

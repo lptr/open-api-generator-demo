@@ -1,0 +1,29 @@
+plugins {
+    id "org.openapi.generator" version "4.0.2"
+}
+
+configurations {
+	runtimeElements
+}
+
+def generatedDir = project.file("$buildDir/clientapi")
+
+openApiGenerate {
+    generatorName = "kotlin"
+    inputSpec = "src/specs/v1.json"
+    outputDir = generatedDir.path
+    apiPackage = "hu.komdat.parkolasservice.apis"
+    modelPackage = "hu.komdat.parkolasservice.models"
+}
+
+task buildOpenApi(type: GradleBuild) {
+    dependsOn "openApiGenerate"
+    dir = generatedDir
+    tasks = ["assemble"]
+}
+
+artifacts {
+  runtimeElements(file("$generatedDir/build/libs/kotlin-client-1.0.0.jar")) {
+  	builtBy buildOpenApi
+  }
+}
