@@ -3,7 +3,13 @@ plugins {
 }
 
 configurations {
-	runtimeElements
+    runtimeElements {
+        canBeResolved = false
+        canBeConsumed = true
+        attributes {
+            attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, Usage.JAVA_RUNTIME))
+        }
+    }
 }
 
 def generatedDir = project.file("$buildDir/clientapi")
